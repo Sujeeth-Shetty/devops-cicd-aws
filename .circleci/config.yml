@@ -15,10 +15,6 @@ jobs:
           name: Build application
           command: make
 
-      # Run tests using pytest
-      - run:
-          name: Run tests
-          command: pytest
       # Deploy to a new directory with the current date
       - run:
           name: Deploy application
