@@ -17,7 +17,7 @@ jobs:
           command: |
             DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d')"
             mkdir "$DEPLOY_DIR"
-            cp -r . "$DEPLOY_DIR"
+            rsync -av --exclude="$DEPLOY_DIR" . "$DEPLOY_DIR"
 
 workflows:
   version: 2
