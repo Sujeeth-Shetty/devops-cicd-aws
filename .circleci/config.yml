@@ -17,7 +17,7 @@ jobs:
           command: |
             DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d')"
             mkdir "$DEPLOY_DIR"
-            cp -r !(DEPLOY*) "$DEPLOY_DIR"
+            find . -path "./$DEPLOY_DIR" -prune -o -exec cp -r {} "$DEPLOY_DIR" \;
 
 workflows:
   version: 2
