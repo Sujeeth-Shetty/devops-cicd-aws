@@ -13,7 +13,7 @@ $(VENV)/bin/activate: requirements.txt
 venv: $(VENV)/bin/activate
 
 run: venv
-	./$(VENV)/bin/python3 app.py
+	./$(VENV)/bin/python3 src/app.py
 
 clean:
 	rm -rf $(VENV)

@@ -19,10 +19,9 @@ jobs:
       - run:
           name: Deploy application
           command: |
-            DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d')"
+            DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d_%H%M%S')"
             mkdir "$DEPLOY_DIR"
-            find . -path "./$DEPLOY_DIR" -prune -o -exec cp -r {} "$DEPLOY_DIR" \;
-
+            mc src/ "$DEPLOY_DIR"
 workflows:
   version: 2
   build-and-deploy:

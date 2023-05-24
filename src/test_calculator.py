@@ -1,5 +1,5 @@
 #create pytest file for testing calculator.py
-import calculator
+import src.calculator as calculator
 
 class TestCalculator:
     
