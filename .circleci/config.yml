@@ -1,21 +1,26 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@1.5.0
+executors:
+  python-executor:
+    docker:
+      - image: python:3.10
 
 jobs:
-  build-and-test: # This is the name of the job, feel free to change it to better match what you're trying to do!
-   docker:
-      - image: cimg/python:3.10.2
-   working_directory: DEPLOY-TEST
-   steps:
+  build-and-deploy:
+    executor: python-executor
+    steps:
       - checkout
-      - run: make
-      - run:
-          name: Run tests
-          command: pytest
-workflows:
-  build-and-test: # This is the name of the workflow, feel free to change it to better match your workflow.
-    jobs:
-      - build-and-test
 
+      # Deploy to a new directory with the current date
+      - run:
+          name: Deploy application
+          command: |
+            DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d')"
+            mkdir "$DEPLOY_DIR"
+            cp -r . "$DEPLOY_DIR"
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build-and-deploy
