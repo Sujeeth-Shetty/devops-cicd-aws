@@ -22,6 +22,8 @@ jobs:
             DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d_%H%M%S')"
             mkdir "$DEPLOY_DIR"
             mv src/ "$DEPLOY_DIR"
+            cd "$DEPLOY_DIR"
+            ls -la
 workflows:
   version: 2
   build-and-deploy:
