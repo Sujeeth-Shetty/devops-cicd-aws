@@ -10,17 +10,16 @@ jobs:
     executor: python-executor
     steps:
       - checkout
-      # Build the application using the Makefile
+      # test the application using the Makefile
       - run:
           name: Test Application
           command: make
 
-      # Deploy to a new directory with the current date
+      # Build and Deploy to a new directory with the current date
       - run:
           name: Deploy application
           command: |
             DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d_%H%M%S')"
-            ls -la
             mkdir "$DEPLOY_DIR"
             mv Makefile "$DEPLOY_DIR"
             mv requirements.txt "$DEPLOY_DIR"
@@ -28,7 +27,6 @@ jobs:
             ls -la
             cd "$DEPLOY_DIR"
             make
-            ls -la
 workflows:
   version: 2
   build-and-deploy:
