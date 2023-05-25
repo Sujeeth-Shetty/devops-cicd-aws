@@ -12,7 +12,7 @@ jobs:
       - checkout
       # Build the application using the Makefile
       - run:
-          name: Build application
+          name: Test Application
           command: make
 
       # Deploy to a new directory with the current date
@@ -22,8 +22,12 @@ jobs:
             DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d_%H%M%S')"
             ls -la
             mkdir "$DEPLOY_DIR"
+            mv Makefile "$DEPLOY_DIR"
+            mv requirements.txt "$DEPLOY_DIR"
             mv src/ "$DEPLOY_DIR"
+            ls -la
             cd "$DEPLOY_DIR"
+            make
             ls -la
 workflows:
   version: 2
