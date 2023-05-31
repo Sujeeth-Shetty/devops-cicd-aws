@@ -1,43 +1,18 @@
 version: 2.1
 
-executors:
-  python-executor:
-    docker:
-      - image: python:3.10
+orbs:
+  aws-ecr: circleci/aws-ecr@8.1.3
 
-jobs:
-  build-and-test:
-    executor: python-executor
-    steps:
-      - checkout
-      # test the application using the Makefile
-      - run:
-          name: Test Application
-          command: make
-  build-and-deploy:
-    executor: python-executor
-    steps:
-      - checkout  
-      # Build and Deploy to a new directory with the current date
-      - run:
-          name: Deploy application
-          command: |
-            DEPLOY_DIR="DEPLOY_$(date +'%Y%m%d_%H%M%S')"
-            mkdir "$DEPLOY_DIR"
-            mv Makefile "$DEPLOY_DIR"
-            mv requirements.txt "$DEPLOY_DIR"
-            mv src/ "$DEPLOY_DIR"
-            ls -la
-            cd "$DEPLOY_DIR"
-            make
 workflows:
-  version: 2
-  devops:
+  build_and_push_image:
     jobs:
-      - build-and-test
-      - build-and-deploy:
-          requires:
-            - build-and-test
+      - aws-ecr/build-and-push-image:
+          context: aws-dev
+          create-repo: true
+          dockerfile: Dockerfile
+          path: .
+          repo: circleci-ecr-demo
+          tag: "$CIRCLE_SHA1"
           filters:
             branches:
               only: production
