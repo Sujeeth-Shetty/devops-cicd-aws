@@ -1,5 +1,5 @@
 # Use an official Python runtime as the base image
-FROM python:3.10-slim
+FROM --platform=linux/amd64 python:3.10-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/app.py .
 
 # Expose the port on which the server will run
-EXPOSE 8001
+EXPOSE 5000
 
 # Define the command to run your application
 CMD ["python", "app.py"]
