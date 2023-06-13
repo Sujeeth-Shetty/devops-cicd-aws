@@ -24,3 +24,13 @@ venv/
 __pycache__/
 .pytest_cache/
 old_*.*
+secrets.tfvars
+infra/secrets
+infra/security-groups
+infra/vpc
+infra/*.tf
+infra/*.tfvars
+charts/
+*.tgz
+test.py
+LICENCE
